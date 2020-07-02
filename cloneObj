@@ -1,0 +1,26 @@
+/**
+ * @description:将对象进行深度克隆
+ * @param {Object or Array} 需要克隆的对象/新对象
+ * @param {Object or Array} 等待被克隆的对象/旧对象
+ * @return: null (直接在新的对象中更改)
+ */
+function deepCopy(newObj, oldObj) {
+    for (var k in oldObj) { //遍历旧对象
+        // 判断我们的属性值属于哪种数据类型
+        // 1.获取属性值
+        var item = oldObj[k];
+        // console.log(item);
+        // 判断这个item的类型属性，如果是复杂数据类型就再次调用copyDeep进行克隆，如果是简单类型就可以直接克隆
+        if (item instanceof Array) {
+            newObj[k] = [];
+            copyDeep(newObj[k], item);
+        } else if (item instanceof Function) {
+            newObj[k] = item;
+        } else if (item instanceof Object) {
+            newObj[k] = {};
+            copyDeep(newObj[k], item);
+        } else {
+            newObj[k] = item;
+        }
+    }
+}
